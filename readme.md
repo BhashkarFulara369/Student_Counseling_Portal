@@ -44,6 +44,11 @@ Staff admins have access to a powerful control panel:
 Want to see the portal in action?  
 [🎥 Watch Demo on YouTube](https://youtu.be/p0coCATxlDU?si=p6p0vYWkU3MDy25h)
 
+## User Process Flow --
+![Image](https://github.com/user-attachments/assets/644c060d-fc5f-4667-81ee-f02773646de7)
+
+## UML Diagram --
+
 ## 🛠️ Tech Stack
 
 | Layer        | Technology         |
