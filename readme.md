@@ -42,7 +42,7 @@ Staff admins have access to a powerful control panel:
 ## 🎥 Demo Video
 
 Want to see the portal in action?  
-[🎥 Demo Video](demo/student_counseling_portal_demo.mp4)
+[🎥 Watch Demo on YouTube](https://youtu.be/p0coCATxlDU?si=p6p0vYWkU3MDy25h)
 
 ## 🛠️ Tech Stack
 
