@@ -48,7 +48,7 @@ Want to see the portal in action?
 ![Image](https://github.com/user-attachments/assets/644c060d-fc5f-4667-81ee-f02773646de7)
 
 ## UML Diagram --
-
+![Image](https://github.com/user-attachments/assets/4f3ad5b1-0065-4b6c-976a-5c10e999b2a6)
 ## 🛠️ Tech Stack
 
 | Layer        | Technology         |
