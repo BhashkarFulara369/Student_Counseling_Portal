@@ -1,0 +1,94 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Counseling Form{% endblock %}
+
+{% block step1_active %}active{% endblock %}
+{% block step1_indicator %}active{% endblock %}
+
+{% block submitted_status %}
+  {% if submitted %}active{% else %}inactive{% endif %}
+{% endblock %}
+
+{% block accepted_status %}
+  {% if accepted %}active{% else %}inactive{% endif %}
+{% endblock %}
+
+{% block payment_status %}
+  {% if payment_verified %}active{% else %}inactive{% endif %}
+{% endblock %}
+
+{% block content %}
+
+  <!-- Status Section -->
+  <div class="section-title">🎓 Student Dashboard</div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <p><strong>Status:</strong> {{ status }}</p>
+      <p><strong>Allocated branch:</strong> {{ student.allocated_branch|default:"Not allocated yet" }}</p>
+    </div>
+  </div>
+
+  <!-- Next Action Buttons -->
+  {% if can_accept %}
+    <form method="post" action="{% url 'accept_allocation' %}" class="mb-4">
+      {% csrf_token %}
+      <button class="btn btn-success w-100">Accept allocated branch</button>
+    </form>
+  {% elif can_upload_receipt %}
+    <a href="{% url 'upload_receipt' %}" class="btn btn-primary w-100 mb-4">Upload payment receipt</a>
+  {% endif %}
+
+  <!-- ✅ Download Offer Letter Button -->
+  {% if accepted and payment_verified %}
+    <a href="{% url 'download_offer_letter' %}" class="btn btn-outline-primary w-100 mb-4">
+      📝 Download Offer Letter
+    </a>
+  {% endif %}
+
+  <!-- Step 1 Form: Personal Details -->
+  <div class="section-title">Fill Your Personal Details</div>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="POST" action="{% url 'submit_personal_info' %}">
+    {% csrf_token %}
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="full_name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="full_name" name="full_name"
+                 value="{{ student.full_name|default_if_none:'' }}" required>
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="age" name="age"
+                 value="{{ student.age|default_if_none:'' }}" required>
+        </div>
+        <div class="mb-3">
+          <label for="gender" class="form-label">Gender</label>
+          <select class="form-select" id="gender" name="gender" required>
+            <option value="">Select</option>
+            <option {% if student.gender == "Male" %}selected{% endif %}>Male</option>
+            <option {% if student.gender == "Female" %}selected{% endif %}>Female</option>
+            <option {% if student.gender == "Other" %}selected{% endif %}>Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="contact" class="form-label">Contact Number</label>
+          <input type="text" class="form-control" id="contact" name="contact"
+                 value="{{ student.contact|default_if_none:'' }}" required>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Save & Continue</button>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}

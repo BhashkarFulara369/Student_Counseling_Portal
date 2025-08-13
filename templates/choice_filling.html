@@ -1,0 +1,68 @@
+<!-- templates/choice_filling.html -->
+
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Choice Filling{% endblock %}
+{% block step3_active %}active{% endblock %}
+{% block step3_indicator %}active{% endblock %}
+
+{% block content %}
+  <div class="section-title">Make Your Choices</div>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="POST" action="{% url 'submit_choices' %}">
+    {% csrf_token %}
+    <div class="card mb-4">
+      <div class="card-body">
+
+        <div class="mb-3">
+          <label for="choice_1" class="form-label">First Choice</label>
+          <select class="form-select" id="choice_1" name="choice_1" required>
+            <option value="">Select your top preference</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Mechanical">Mechanical</option>
+            <option value="Civil">Civil</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="choice_2" class="form-label">Second Choice</label>
+          <select class="form-select" id="choice_2" name="choice_2" required>
+            <option value="">Select your second preference</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Mechanical">Mechanical</option>
+            <option value="Civil">Civil</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="choice_3" class="form-label">Third Choice</label>
+          <select class="form-select" id="choice_3" name="choice_3" required>
+            <option value="">Select your third preference</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Mechanical">Mechanical</option>
+            <option value="Civil">Civil</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+          Submit Choices
+        </button>
+      </div>
+    </div>
+  </form>
+{% endblock %}

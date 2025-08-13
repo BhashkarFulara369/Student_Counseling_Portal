@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Payment Receipt</title>
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container my-5" style="max-width: 720px;">
+  <h3 class="mb-4 text-center">Upload Payment Receipt</h3>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Select receipt file (PDF/JPG/PNG)</label>
+      <input type="file" name="receipt" class="form-control" accept=".pdf,image/*" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Upload</button>
+  </form>
+
+  {% if student.receipt %}
+    <div class="mt-4">
+      <p>Current uploaded receipt:</p>
+      <a href="{{ student.receipt.url }}" target="_blank">{{ student.receipt.name }}</a>
+    </div>
+  {% endif %}
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+{# templates/education_info.html #}
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Education Info{% endblock %}
+{% block step2_active %}active{% endblock %}
+{% block step2_indicator %}active{% endblock %}
+
+{% block content %}
+<div class="section-title">Fill Your Education Details</div>
+
+{% if messages %}
+  {% for msg in messages %}
+    <div class="alert alert-{{ msg.tags }} alert-dismissible fade show" role="alert">
+      {{ msg }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<form method="POST" action="{% url 'submit_education_info' %}">
+  {% csrf_token %}
+
+  <!-- 10th Grade -->
+  <div class="card mb-4">
+    <div class="card-header">10th Grade Details</div>
+    <div class="card-body">
+      <div class="row gy-3">
+        <div class="col-md-6">
+          <label for="school_10" class="form-label">School Name</label>
+          <input type="text"
+                 id="school_10"
+                 name="school_10"
+                 class="form-control"
+                 value="{{ profile.school_10 }}">
+        </div>
+        <div class="col-md-3">
+          <label for="tenth_board" class="form-label">Board</label>
+          <input type="text"
+                 id="tenth_board"
+                 name="tenth_board"
+                 class="form-control"
+                 value="{{ profile.tenth_board }}">
+        </div>
+        <div class="col-md-3">
+          <label for="year_10" class="form-label">Passing Year</label>
+          <input type="number"
+                 id="year_10"
+                 name="year_10"
+                 class="form-control"
+                 value="{{ profile.year_10 }}">
+        </div>
+      </div>
+
+      <div class="row gy-3 mt-3">
+        <div class="col-md-3">
+          <label for="maths_10" class="form-label">Maths</label>
+          <input type="number"
+                 id="maths_10"
+                 name="maths_10"
+                 class="form-control"
+                 value="{{ profile.maths_10 }}">
+        </div>
+        <div class="col-md-3">
+          <label for="science_10" class="form-label">Science</label>
+          <input type="number"
+                 id="science_10"
+                 name="science_10"
+                 class="form-control"
+                 value="{{ profile.science_10 }}">
+        </div>
+        <div class="col-md-3">
+          <label for="english_10" class="form-label">English</label>
+          <input type="number"
+                 id="english_10"
+                 name="english_10"
+                 class="form-control"
+                 value="{{ profile.english_10 }}">
+        </div>
+        <div class="col-md-3">
+          <label for="social_10" class="form-label">Social</label>
+          <input type="number"
+                 id="social_10"
+                 name="social_10"
+                 class="form-control"
+                 value="{{ profile.social_10 }}">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12th Grade -->
+  <div class="card mb-4">
+    <div class="card-header">12th Grade Details</div>
+    <div class="card-body">
+      <div class="row gy-3">
+        <div class="col-md-6">
+          <label for="school_12" class="form-label">School Name</label>
+          <input type="text"
+                 id="school_12"
+                 name="school_12"
+                 class="form-control"
+                 value="{{ profile.school_12 }}">
+        </div>
+        <div class="col-md-2">
+          <label for="tenth_board" class="form-label">Board</label>
+          <input type="text"
+                 id="twelfth_board"
+                 name="twelfth_board"
+                 class="form-control"
+                 value="{{ profile.twelfth_board }}">
+        </div>
+        <div class="col-md-2">
+          <label for="twelfth_stream" class="form-label">Stream</label>
+          <input type="text"
+                 id="twelfth_stream"
+                 name="twelfth_stream"
+                 class="form-control"
+                 value="{{ profile.twelfth_stream }}">
+        </div>
+        <div class="col-md-2">
+          <label for="year_12" class="form-label">Passing Year</label>
+          <input type="number"
+                 id="year_12"
+                 name="year_12"
+                 class="form-control"
+                 value="{{ profile.year_12 }}">
+        </div>
+      </div>
+
+      <div class="row gy-3 mt-3">
+        <div class="col-md-3">
+          <label for="physics_12" class="form-label">Physics</label>
+          <input type="number"
+                 id="physics_12"
+                 name="physics_12"
+                 class="form-control"
+                 value="{{ profile.physics_12 }}">
+        </div>
+        <div class="col-md-3">
+          <label for="chemistry_12" class="form-label">Chemistry</label>
+          <input type="number"
+                 id="chemistry_12"
+                 name="chemistry_12"
+                 class="form-control"
+                 value="{{ profile.chemistry_12 }}">
+        </div>
+        <div class="col-md-3">
+          <label for="maths_12" class="form-label">Maths</label>
+          <input type="number"
+                 id="maths_12"
+                 name="maths_12"
+                 class="form-control"
+                 value="{{ profile.maths_12 }}">
+        </div>
+        <div class="col-md-3">
+          <label for="english_12" class="form-label">English</label>
+          <input type="number"
+                 id="english_12"
+                 name="english_12"
+                 class="form-control"
+                 value="{{ profile.english_12 }}">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">
+    Save & Continue
+  </button>
+</form>
+{% endblock %}

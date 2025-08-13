@@ -1,0 +1,150 @@
+Django Setup Guide with Virtual Environment (Windows-Friendly)
+
+Step 1: Open Command Prompt
+----------------------------------
+- Press Win + R, type "cmd", and hit Enter
+- Or search for "Command Prompt" in the Start menu
+
+Step 2: Navigate to Your Project Folder
+----------------------------------
+cd D:\Student_Counseling_App
+
+Step 3: Create a Virtual Environment
+----------------------------------
+python -m venv venv
+
+Step 4: Activate the Virtual Environment
+----------------------------------
+venv\Scripts\activate.bat
+
+(You should now see "(venv)" in your terminal)
+
+Step 5: Install Django
+----------------------------------
+pip install django
+
+Step 6: Start Your Django Project
+----------------------------------
+django-admin startproject Student .
+
+(The dot keeps the project inside your current folder)
+
+Step 7: Run the Development Server
+----------------------------------
+python manage.py runserver
+
+Open your browser and go to:
+http://127.0.0.1:8000
+
+Step 8: Open VS Code and Select Interpreter
+----------------------------------
+- Open VS Code in your project folder:
+  code .
+
+- Press Ctrl+Shift+P → type "Python: Select Interpreter"
+- Choose the one that says:
+  venv\Scripts\python.exe
+
+You're all set!
+
+Step 9: Fix PowerShell Script Execution Error
+ (If Needed)
+If you see this error:
+
+File D:\Student_Counseling_App\venv\Scripts\Activate.ps1 cannot be loaded because running scripts is disabled on this system.
+Do this:
+Open PowerShell as Administrator
+
+Press Win + X → select Windows PowerShell (Admin)
+
+Run This Command
+
+powershell
+   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+Type Y and press Enter
+
+Reopen VS Code and Try Again
+
+powershell
+.\venv\Scripts\Activate.ps1
+You should now see (venv) in your
+ terminal — virtual environment is active!
+
+
+#Creating databases migrations and migrate 
+
+python manage.py makemigrations 
+python manage.py migrate
+
+for changing the database schema 
+
+# Creating SuperUser for admin panel /admin
+python manage.py createsuperuser
+
+
+# I am setting up the all-auth dajngo project 
+
+First command 
+pip install django-allauth
+pip install requests
+
+after that in INSTALLED APPS 
+
+INSTALLED_APPS = [
+    'django.contrib.sites',  # Required for allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    # ... your other apps
+]
+SITE_ID = 1
+
+OAuth2, a secure protocol that lets users authenticate via trusted third-party providers.
+
+# CONFIGURATION AUTHENTHICATION SETTINGS 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+#now project level urls.py 
+
+ path('accounts/', include('allauth.urls')),
+
+
+
+
+
+
+
+# Final things done by me 
+ 1. 	Student fills personal info
+2. 	Student fills education and choices
+3. 	Admin allocates branch
+4. 	Student accepts allocation
+5. 	Student uploads receipt
+6. 	Admin verifies payment
+7. 	Student sees final confirmation
+
+
+# Now working on offer letter pdf generation 
+
+pip install reportlab
+
+ Key Elements of a Professional Offer Letter
+| Element | Purpose | 
+| Institute Name & Logo | Establishes authenticity and branding | 
+| Date of Issue | Marks when the offer was generated | 
+| Student Details | Full name, application ID (optional), allocated branch | 
+| Confirmation Message | Formal statement of seat allocation and next steps | 
+| Signature Block | Placeholder for registrar or admin signature | 
+| Footer | Institute address, contact info, disclaimer | 
+
+
+
+

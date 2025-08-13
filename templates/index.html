@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Counseling Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+        }
+       
+       
+        /* Animation Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    60% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* Animation Classes */
+.animated {
+    animation-duration: 1.2s;
+    animation-fill-mode: both;
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+.bounceIn {
+    animation-name: bounceIn;
+}
+
+  
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body > main {
+    flex: 1;
+}
+
+
+
+
+     #chatBox {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">🎓Student Counseling Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/signup">SignUp</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login_view">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+ 
+ <!-- Main Content -->
+    <main>
+        <section class="container my-5">
+            <div class="text-center">
+                <h2>Welcome to the Student Counseling Portal</h2>
+                <p class="lead mt-3">
+                    If you're a <strong>new student</strong> or an <strong>admin</strong>, please 
+                    <a href="/signup" class="text-primary fw-bold">Sign Up</a> first.<br>
+                    Once registered, you can 
+                    <a href="/login_view" class="text-primary fw-bold">Log In</a> to access your dashboard.
+                </p>
+                <p class="text-muted">We're here to help you make informed academic choices and guide you through the counseling process.</p>
+            </div>
+        </section>
+    </main>
+
+   <!-- Footer -->
+<footer class="bg-primary text-center py-4 mt-auto shadow-sm">
+  <div class="container">
+    <p class="mb-1 animated fadeIn fw-bold text-dark">
+      © 2025 Student Counseling Portal. All rights reserved.
+    </p>
+    <div class="animated bounceIn fw-bold text-dark">
+      Made by Bhaskar with love ❤️
+    </div>
+  </div>
+</footer>
+
+
+ 
+              <!-- Chat Support Button -->
+<div id="chatBubble" class="position-fixed bottom-0 end-0 m-4">
+    <button class="btn btn-dark rounded-circle shadow" onclick="toggleChat()" style="width: 60px; height: 60px;">
+        💬
+    </button>
+</div>
+
+<!-- Chat Box -->
+<div id="chatBox" class="position-fixed bottom-0 end-0 m-4 p-3 bg-white rounded shadow" style="width: 300px; display: none;">
+    <h6 class="mb-2">👋 Hi there!</h6>
+    <p style="font-size: 0.9rem;">Need help or want to talk to with an Admin? Send Message</p>
+    <input type="text" class="form-control mb-2" placeholder="Type your message...">
+    <button class="btn btn-success w-100" onclick="sendChat()">Send</button>
+</div>
+
+
+
+  <!-- Script for chatbot box -->
+       <script>
+    function toggleChat() {
+        const chatBox = document.getElementById("chatBox");
+        chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
+    }
+
+    function sendChat() {
+        alert("Your message has been sent to the ADMIN!");
+        document.getElementById("chatBox").style.display = "none";
+    }
+
+    // Newsletter toast
+    document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const toastEl = document.getElementById("newsletterToast");
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+        this.reset();
+    });
+</script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Staff Admin Panel</title>
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #00796b;
+      color: white;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: white;
+    }
+    .navbar-brand:hover {
+      color: #e0f7fa;
+    }
+    .logout-btn {
+      color: white;
+      border: 1px solid white;
+      transition: all 0.3s ease;
+    }
+    .logout-btn:hover {
+      background-color: white;
+      color: #00796b;
+    }
+    .panel-container {
+      max-width: 1100px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .table th {
+      background-color: #00796b;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .table-hover tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+    .btn-sm {
+      font-size: 0.85rem;
+      padding: 4px 10px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg px-4 py-2">
+  <div class="container-fluid">
+    <span class="navbar-brand"> ***** ** ** Staff Admin Panel</span>
+    
+  </div>
+</nav>
+
+<div class="panel-container">
+  <h4 class="text-center mb-4">Seat Allocation Dashboard</h4>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Student name</th>
+        <th>10th total</th>
+        <th>12th total</th>
+        <th>Total (10th+12th)</th>
+        <th>Choices</th>
+        <th>Allocated branch</th>
+        <th>Accepted?</th>
+        <th>Payment verified?</th>
+        <th>Receipt</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+      <tr>
+        <td>{{ student.rank }}</td>
+        <td>{{ student.full_name }}</td>
+        <td>{{ student.tenth_total }}</td>
+        <td>{{ student.twelfth_total }}</td>
+        <td><strong>{{ student.total_marks }}</strong></td>
+        <td>
+          <ul class="list-unstyled mb-0">
+            <li>1️ {{ student.choice_1|default:"—" }}</li>
+            <li>2️ {{ student.choice_2|default:"—" }}</li>
+            <li>3️ {{ student.choice_3|default:"—" }}</li>
+          </ul>
+        </td>
+        <td>{{ student.allocated_branch|default:"Not allocated" }}</td>
+        <td>{{ student.branch_accepted|yesno:"✅,❌" }}</td>
+        <td>{{ student.payment_verified|yesno:"✅,❌" }}</td>
+
+        <!-- Receipt column -->
+        <td>
+          {% if student.receipt %}
+            <a href="{{ student.receipt.url }}" target="_blank" class="btn btn-sm btn-outline-info">
+              View Receipt
+            </a>
+          {% else %}
+            <span class="text-muted">No receipt</span>
+          {% endif %}
+
+          {% if student.branch_accepted and student.payment_verified %}
+            <a href="{% url 'generate_offer_letter' student.id %}" class="btn btn-sm btn-outline-primary mt-1">
+              📝 Offer Letter
+            </a>
+          {% endif %}
+        </td>
+
+        <!-- Actions column -->
+        <td>
+          <form method="post" action="{% url 'staff_admin_panel' %}" class="mb-1">
+            {% csrf_token %}
+            <input type="hidden" name="student_id" value="{{ student.id }}">
+            <input type="text" name="allocated_branch" placeholder="Branch name"
+                   class="form-control form-control-sm" required>
+            <button type="submit" class="btn btn-sm btn-primary mt-1">Allocate</button>
+          </form>
+
+          <div class="d-flex gap-1 flex-wrap">
+            <a href="{% url 'toggle_acceptance' student.id %}" class="btn btn-sm btn-outline-success">
+              Toggle Acceptance
+            </a>
+            <a href="{% url 'verify_payment' student.id %}"
+               class="btn btn-sm {% if student.payment_verified %}btn-success{% else %}btn-outline-dark{% endif %}">
+              {% if student.payment_verified %}Verified{% else %}Verify Payment{% endif %}
+            </a>
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="11" class="text-center text-muted">No student records found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Logout confirmation -->
+<script>
+  function confirmLogout() {
+    if (confirm("Are you sure you want to logout?")) {
+      window.location.href = "{% url 'logout' %}";
+    }
+  }
+</script>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Floating Logout Button -->
+<a href="#" onclick="confirmLogout()" class="floating-logout">
+  🚪 Logout
+</a>
+
+<style>
+  .floating-logout {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #00796b;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .floating-logout:hover {
+    background-color: #005f56;
+    transform: scale(1.05);
+    text-decoration: none;
+  }
+</style>
+
+<script>
+  function confirmLogout() {
+    if (confirm("Are you sure you want to logout?")) {
+      window.location.href = "{% url 'logout' %}";
+    }
+  }
+</script>
+
+</body>
+</html>
